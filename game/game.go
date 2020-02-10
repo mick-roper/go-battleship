@@ -10,11 +10,6 @@ type RunOptions struct {
 	RenderingService RenderingService
 }
 
-// InputService provides input
-type InputService interface {
-	GetEvents()
-}
-
 // RenderingService handles rendering
 type RenderingService interface {
 	Clear()
@@ -34,15 +29,14 @@ var state gameState = stateInitialising
 // Run the game
 func Run(opts *RunOptions) {
 	opts.Logger("initialising the game")
-	defer cleanup()
 
-	for state != stateExiting {
-		state = stateExiting
+	for {
+		for ok, e := opts.InputService.GetEvents(); ok == true; {
+			if e == KeyEsc {
+
+			}
+		}
 	}
 
 	opts.Logger("exiting...")
-}
-
-func cleanup() {
-
 }
