@@ -1,5 +1,26 @@
 package game
 
+// Logger that writes logs
+type Logger func(string)
+
+// RunOptions used to define how the game works
+type RunOptions struct {
+	Logger           Logger
+	InputService     InputService
+	RenderingService RenderingService
+}
+
+// InputService provides input
+type InputService interface {
+	GetEvents()
+}
+
+// RenderingService handles rendering
+type RenderingService interface {
+	Clear()
+	Draw(x, y int, character byte)
+}
+
 type gameState int
 
 const (
@@ -7,14 +28,6 @@ const (
 	stateRunning
 	stateExiting
 )
-
-// Logger that writes logs
-type Logger func(string)
-
-// RunOptions used to define how the game works
-type RunOptions struct {
-	Logger Logger
-}
 
 var state gameState = stateInitialising
 
