@@ -23,6 +23,11 @@ type InputService interface {
 	GetEvents() (bool, Event)
 }
 
+// InputHandler handles input events
+type InputHandler interface {
+	HandleInput(Event)
+}
+
 // ConsoleInputService gets input from stdin
 type ConsoleInputService struct {
 	reader *bufio.Reader

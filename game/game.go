@@ -16,27 +16,19 @@ type RenderingService interface {
 	Draw(x, y int, character byte)
 }
 
-type gameState int
-
-const (
-	stateInitialising gameState = iota
-	stateRunning
-	stateExiting
-)
-
-var state gameState = stateInitialising
-
 // Run the game
 func Run(opts *RunOptions) {
 	opts.Logger("initialising the game")
+	defer opts.Logger("exiting...")
 
-	for {
+	stateService := newGameStateService()
+	inputHandlers := []InputHandler{stateService}
+
+	for stateService.currentState != stateExiting {
 		for ok, e := opts.InputService.GetEvents(); ok == true; {
-			if e == KeyEsc {
-				return
+			for _, h := range inputHandlers {
+				h.HandleInput(e)
 			}
 		}
 	}
-
-	opts.Logger("exiting...")
 }
