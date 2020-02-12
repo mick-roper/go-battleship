@@ -33,7 +33,7 @@ func Run(opts *RunOptions) {
 	for {
 		for ok, e := opts.InputService.GetEvents(); ok == true; {
 			if e == KeyEsc {
-
+				return
 			}
 		}
 	}
